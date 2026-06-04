@@ -1321,6 +1321,7 @@
       .eq('status', 'approved')
       .order('created_at', { ascending: false })
       .limit(6);
+    console.log('data:', data, 'error:', error); 
 
     if (error || !data || data.length === 0) {
       document.getElementById('prosGrid').innerHTML = `
