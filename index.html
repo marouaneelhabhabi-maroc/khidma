@@ -913,13 +913,12 @@
     </div>
  
     <div class="hero-illustration">
-      <div class="pro-cards-grid">
-        <div class="mini-pro-card">
-          <div class="pro-icon" style="background: #EAF2FF;">🔧</div>
-          <div class="pro-name">محمد</div>
-          <div class="pro-role">بلومبي محترف</div>
-          <div class="pro-stars">⭐ 4.9</div>
-        </div>
+<div class="pro-cards-grid" id="featuredGrid">
+  <div class="mini-pro-card" style="opacity:.4">
+    <div class="pro-icon" style="background:#eee;">⏳</div>
+    <div class="pro-name">...</div>
+  </div>
+</div>
         <div class="mini-pro-card">
           <div class="pro-icon" style="background: #FFF9E6;">⚡</div>
           <div class="pro-name">أحمد</div>
@@ -1272,6 +1271,45 @@
   window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 30);
   });
+
+
+
+
+
+
+async function loadFeatured() {
+  const { data } = await _sb
+    .from('providers')
+    .select('name, service_category, rating, profile_image')
+    .eq('status', 'approved')
+    .eq('featured', true)
+    .limit(4);
+
+  if (!data || !data.length) return;
+
+  const colors = ['#EAF2FF','#FFF9E6','#F0FFF8','#FFF0F0'];
+  const icons  = ['🔧','⚡','🪚','🚗'];
+
+  document.getElementById('featuredGrid').innerHTML = data.map((p, i) => `
+    <div class="mini-pro-card">
+      <div class="pro-icon" style="background:${colors[i % 4]}">
+        ${p.profile_image 
+          ? `<img src="${p.profile_image}" style="width:40px;height:40px;border-radius:50%;object-fit:cover">` 
+          : icons[i % 4]}
+      </div>
+      <div class="pro-name">${p.name}</div>
+      <div class="pro-role">${p.service_category}</div>
+      <div class="pro-stars">⭐ ${p.rating || '—'}</div>
+    </div>
+  `).join('');
+}
+
+loadFeatured();
+
+
+
+
+
  
   // Search example fill
   function fillSearch(term) {
