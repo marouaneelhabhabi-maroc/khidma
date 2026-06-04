@@ -1306,34 +1306,9 @@
 
 
 
-async function loadFeatured() {
-  const { data } = await _sb
-    .from('providers')
-    .select('name, service_category, rating, profile_image')
-    .eq('status', 'approved')
-    .eq('featured', true)
-    .limit(4);
 
-  if (!data || !data.length) return;
 
-  const colors = ['#EAF2FF','#FFF9E6','#F0FFF8','#FFF0F0'];
-  const icons  = ['🔧','⚡','🪚','🚗'];
 
-  document.getElementById('featuredGrid').innerHTML = data.map((p, i) => `
-    <div class="mini-pro-card">
-      <div class="pro-icon" style="background:${colors[i % 4]}">
-        ${p.profile_image 
-          ? `<img src="${p.profile_image}" style="width:40px;height:40px;border-radius:50%;object-fit:cover">` 
-          : icons[i % 4]}
-      </div>
-      <div class="pro-name">${p.name}</div>
-      <div class="pro-role">${p.service_category}</div>
-      <div class="pro-stars">⭐ ${p.rating || '—'}</div>
-    </div>
-  `).join('');
-}
-
-loadFeatured();
 
 
 
@@ -1406,6 +1381,104 @@ loadFeatured();
     "https://kacutivlrarulhbrzsil.supabase.co",
     "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthY3V0aXZscmFydWxoYnJ6c2lsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MDYyNTQsImV4cCI6MjA5NjA4MjI1NH0.U39OH4ysCEpQGGkJabKRw_u22SVLv8J7elUzESdxjTY"
   );
+
+
+
+
+document.head.insertAdjacentHTML('beforeend', `<style>
+.mini-pro-card { cursor: pointer; }
+.mini-pro-card:hover {
+  transform: translateY(-6px) !important;
+  box-shadow: 0 8px 24px rgba(26,115,232,0.15);
+}
+</style>`);
+
+let featuredData = [];
+
+async function loadFeatured() {
+  const { data } = await _sb
+    .from('providers')
+    .select('*')
+    .eq('status', 'approved')
+    .eq('featured', true)
+    .limit(4);
+
+  if (!data || !data.length) {
+    document.getElementById('featuredGrid').innerHTML =
+      '<div style="grid-column:1/-1;text-align:center;padding:2rem;color:#94A3B8;font-size:13px">لا يوجد مهنيون مميزون بعد</div>';
+    return;
+  }
+
+  featuredData = data;
+
+  const colors = ['#EAF2FF','#FFF9E6','#F0FFF8','#FFF0F0'];
+  const icons  = ['🔧','⚡','🪚','🚗'];
+
+  document.getElementById('featuredGrid').innerHTML = data.map((p, i) => `
+    <div class="mini-pro-card" onclick="openProModal('${p.id}')">
+      <div class="pro-icon" style="background:${colors[i % 4]}">
+        ${p.profile_image
+          ? `<img src="${p.profile_image}" style="width:40px;height:40px;border-radius:50%;object-fit:cover">`
+          : icons[i % 4]}
+      </div>
+
+      <div class="pro-name">${p.name || '—'}</div>
+      <div class="pro-role">${p.service_category || '—'}</div>
+      <div class="pro-stars">⭐ ${p.rating || '—'}</div>
+
+      <div style="font-size:11px;color:#94A3B8;margin-top:4px">
+        📍 ${p.city || '—'}
+      </div>
+
+      <div style="margin-top:8px;background:var(--blue);color:#fff;border-radius:50px;padding:5px 12px;font-size:12px;font-weight:700;display:inline-block">
+        عرض التفاصيل ←
+      </div>
+    </div>
+  `).join('');
+}
+
+function openProModal(id) {
+  const p = featuredData.find(x => x.id === id);
+  if (!p) return;
+
+  const avatarEl = document.getElementById('mAvatar');
+
+  avatarEl.innerHTML = p.profile_image
+    ? `<img src="${p.profile_image}" style="width:100%;height:100%;object-fit:cover">`
+    : (p.name || '؟')[0];
+
+  document.getElementById('mName').textContent = p.name || '—';
+  document.getElementById('mService').textContent = p.service_category || '—';
+  document.getElementById('mCity').textContent = '📍 ' + (p.city || '—');
+  document.getElementById('mRating').textContent = '⭐ ' + (p.rating || '—');
+  document.getElementById('mPrice').textContent = p.price || '—';
+  document.getElementById('mExp').textContent =
+    (p.experience_years || '—') + ' سنوات خبرة';
+
+  const descEl = document.getElementById('mDesc');
+
+  if (p.service_description) {
+    descEl.textContent = p.service_description;
+    descEl.style.display = 'block';
+  } else {
+    descEl.style.display = 'none';
+  }
+
+  const wa = (p.whatsapp || p.phone || '').replace(/^0/, '212');
+
+  document.getElementById('mWhatsapp').href =
+    `https://wa.me/${wa}`;
+
+  document.getElementById('mPhone').href =
+    `tel:${p.phone || ''}`;
+
+  document.getElementById('proModal').classList.add('open');
+}
+
+loadFeatured();
+
+
+  
 
   async function loadApprovedProviders() {
     const { data, error } = await _sb
