@@ -793,8 +793,8 @@ function closeConfirm() {
  
 async function confirmAction() {
   if (!pendingConfirm) return;
+  const { type, id } = pendingConfirm; // ← نقلها فوق closeConfirm
   closeConfirm();
-  const { type, id } = pendingConfirm;
  
   if (type === 'approve' || type === 'reject') {
     const newStatus = type === 'approve' ? 'approved' : 'rejected';
