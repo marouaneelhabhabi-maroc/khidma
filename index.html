@@ -1011,108 +1011,23 @@
   <div class="section-label">⭐ الأفضل تقييماً</div>
   <h2 class="section-title">مهنيون <span>موثوقون</span></h2>
   <p class="section-sub">شوف أحسن المهنيين فالمغرب — كل واحد معه تقييمات حقيقية من زبناء ساب عليه.</p>
- 
-  <div class="pros-grid">
-    <!-- Card 1 -->
-    <div class="pro-card">
-      <div class="pro-card-badge">متاح الآن</div>
-      <div class="pro-card-top">
-        <div class="pro-avatar">م</div>
-        <div class="pro-card-info">
-          <div class="pro-card-name">محمد السباك</div>
-          <div class="pro-card-city">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-            فاس
-          </div>
-        </div>
-      </div>
-      <div class="pro-card-stats">
-        <div class="pro-stat">
-          <strong>⭐ 4.9</strong>
-          <span>التقييم</span>
-        </div>
-        <div class="pro-stat">
-          <strong>120</strong>
-          <span>تقييم</span>
-        </div>
-        <div class="pro-stat">
-          <strong>8 سنين</strong>
-          <span>خبرة</span>
-        </div>
-      </div>
-      <div class="pro-card-footer">
-        <div class="pro-price">من <strong>80 درهم</strong></div>
-        <a href="#" class="btn-view">عرض الملف ←</a>
-      </div>
+
+  <div class="pros-grid" id="prosGrid">
+    <!-- loading skeleton -->
+    <div class="pro-card" style="opacity:.4">
+      <div style="height:20px;background:#eee;border-radius:8px;margin-bottom:12px"></div>
+      <div style="height:14px;background:#eee;border-radius:8px;width:60%"></div>
     </div>
- 
-    <!-- Card 2 -->
-    <div class="pro-card">
-      <div class="pro-card-badge">متاح الآن</div>
-      <div class="pro-card-top">
-        <div class="pro-avatar" style="color: var(--green-dark); background: linear-gradient(135deg, var(--green-light), #C6F7E9);">أ</div>
-        <div class="pro-card-info">
-          <div class="pro-card-name">أحمد الكهربائي</div>
-          <div class="pro-card-city">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-            الدار البيضاء
-          </div>
-        </div>
-      </div>
-      <div class="pro-card-stats">
-        <div class="pro-stat">
-          <strong>⭐ 4.8</strong>
-          <span>التقييم</span>
-        </div>
-        <div class="pro-stat">
-          <strong>95</strong>
-          <span>تقييم</span>
-        </div>
-        <div class="pro-stat">
-          <strong>5 سنين</strong>
-          <span>خبرة</span>
-        </div>
-      </div>
-      <div class="pro-card-footer">
-        <div class="pro-price">من <strong>100 درهم</strong></div>
-        <a href="#" class="btn-view">عرض الملف ←</a>
-      </div>
+    <div class="pro-card" style="opacity:.4">
+      <div style="height:20px;background:#eee;border-radius:8px;margin-bottom:12px"></div>
+      <div style="height:14px;background:#eee;border-radius:8px;width:60%"></div>
     </div>
- 
-    <!-- Card 3 -->
-    <div class="pro-card">
-      <div class="pro-card-badge">متاح الآن</div>
-      <div class="pro-card-top">
-        <div class="pro-avatar" style="color: #92400E; background: linear-gradient(135deg, #FFF3C4, #FDE68A);">ي</div>
-        <div class="pro-card-info">
-          <div class="pro-card-name">يوسف النجار</div>
-          <div class="pro-card-city">
-            <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
-            مراكش
-          </div>
-        </div>
-      </div>
-      <div class="pro-card-stats">
-        <div class="pro-stat">
-          <strong>⭐ 4.7</strong>
-          <span>التقييم</span>
-        </div>
-        <div class="pro-stat">
-          <strong>87</strong>
-          <span>تقييم</span>
-        </div>
-        <div class="pro-stat">
-          <strong>12 سنة</strong>
-          <span>خبرة</span>
-        </div>
-      </div>
-      <div class="pro-card-footer">
-        <div class="pro-price">من <strong>150 درهم</strong></div>
-        <a href="#" class="btn-view">عرض الملف ←</a>
-      </div>
+    <div class="pro-card" style="opacity:.4">
+      <div style="height:20px;background:#eee;border-radius:8px;margin-bottom:12px"></div>
+      <div style="height:14px;background:#eee;border-radius:8px;width:60%"></div>
     </div>
   </div>
- 
+
   <div style="text-align: center; margin-top: 48px;">
     <a href="#" class="btn-secondary">شوف جميع المهنيين</a>
   </div>
@@ -1389,6 +1304,74 @@
       }
     });
   });
+</script>
+ <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+ <script>
+  const _sb = window.supabase.createClient(
+    "https://kacutivlrarulhbrzsil.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthY3V0aXZscmFydWxoYnJ6c2lsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MDYyNTQsImV4cCI6MjA5NjA4MjI1NH0.U39OH4ysCEpQGGkJabKRw_u22SVLv8J7elUzESdxjTY"
+  );
+
+  async function loadApprovedProviders() {
+    const { data, error } = await _sb
+      .from('providers')
+      .select('*')
+      .eq('status', 'approved')
+      .order('created_at', { ascending: false })
+      .limit(6);
+
+    if (error || !data || data.length === 0) {
+      document.getElementById('prosGrid').innerHTML = `
+        <div style="grid-column:1/-1;text-align:center;color:#94A3B8;padding:3rem">
+          <p style="font-size:16px">لا يوجد مهنيون معتمدون بعد</p>
+        </div>`;
+      return;
+    }
+
+    document.getElementById('prosGrid').innerHTML = data.map(p => {
+      const initial = (p.name || '؟')[0];
+      const avatarHtml = p.profile_image
+        ? `<img src="${p.profile_image}" style="width:64px;height:64px;border-radius:50%;object-fit:cover;border:3px solid #fff;box-shadow:0 4px 12px rgba(26,115,232,0.2)">`
+        : `<div class="pro-avatar">${initial}</div>`;
+
+      return `
+        <div class="pro-card">
+          <div class="pro-card-badge">متاح الآن</div>
+          <div class="pro-card-top">
+            ${avatarHtml}
+            <div class="pro-card-info">
+              <div class="pro-card-name">${p.name || '—'}</div>
+              <div class="pro-card-city">
+                <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+                ${p.city || '—'}
+              </div>
+            </div>
+          </div>
+          <div class="pro-card-stats">
+            <div class="pro-stat">
+              <strong>⭐ ${p.rating || '—'}</strong>
+              <span>التقييم</span>
+            </div>
+            <div class="pro-stat">
+              <strong>${p.reviews_count || 0}</strong>
+              <span>تقييم</span>
+            </div>
+            <div class="pro-stat">
+              <strong>${p.experience_years || '—'} سنة</strong>
+              <span>خبرة</span>
+            </div>
+          </div>
+          <div class="pro-card-footer">
+            <div class="pro-price">من <strong>${p.price || '—'}</strong></div>
+            <a href="tel:${p.phone}" class="btn-view">تواصل ←</a>
+          </div>
+        </div>`;
+    }).join('');
+  }
+
+  loadApprovedProviders();
 </script>
 </body>
 </html>
