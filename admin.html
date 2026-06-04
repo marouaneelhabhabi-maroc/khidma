@@ -800,8 +800,7 @@ async function confirmAction() {
     const newStatus = type === 'approve' ? 'approved' : 'rejected';
     const { error } = await db.from('providers').update({ status: newStatus }).eq('id', id);
     if (error) { showToast('خطأ: ' + error.message, 'error'); return; }
-    const p = allProviders.find(x => x.id === id);
-    if (p) p.status = newStatus;
+    await loadProviders();
     showToast(type === 'approve' ? '✅ تم قبول المزود بنجاح' : '❌ تم رفض المزود', type === 'approve' ? 'success' : 'warning');
  
   } else if (type === 'delete') {
