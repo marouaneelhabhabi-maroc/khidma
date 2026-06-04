@@ -379,7 +379,7 @@
 const SUPABASE_URL = "https://kacutivlrarulhbrzsil.supabase.co";
 const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthY3V0aXZscmFydWxoYnJ6c2lsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MDYyNTQsImV4cCI6MjA5NjA4MjI1NH0.U39OH4ysCEpQGGkJabKRw_u22SVLv8J7elUzESdxjTY"; // ← anon key ديالك من Supabase dashboard
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 </script>
 
 
@@ -546,7 +546,7 @@ async function submitForm() {
     const avatarFile = document.getElementById('avatarInput').files[0];
     if (avatarFile) {
       const avatarName = `avatars/avatar-${Date.now()}.jpg`;
-      const { error: avatarErr } = await supabase.storage
+      const { error: avatarErr } = await supabaseClient.storage
         .from('provider-files')
         .upload(avatarName, avatarFile);
       if (!avatarErr) {
@@ -562,7 +562,7 @@ async function submitForm() {
     const workFiles = document.getElementById('workInput').files;
     for (let i = 0; i < Math.min(workFiles.length, 10); i++) {
       const fileName = `works/work-${Date.now()}-${i}.jpg`;
-      const { error: workErr } = await supabase.storage
+      const { error: workErr } = await supabaseClient.storage
         .from('provider-files')
         .upload(fileName, workFiles[i]);
       if (!workErr) {
@@ -578,7 +578,7 @@ async function submitForm() {
     const idFile = document.getElementById('idInput').files[0];
     if (idFile) {
       const idName = `id-cards/id-${Date.now()}.jpg`;
-      const { error: idErr } = await supabase.storage
+      const { error: idErr } = await supabaseClient.storage
         .from('provider-files')
         .upload(idName, idFile);
       if (!idErr) {
@@ -590,7 +590,7 @@ async function submitForm() {
     }
 
     // 4. إدراج البيانات فالداطابيز ← هاد الجزء كان ناقص!
-    const { error: insertErr } = await supabase
+    const { error: insertErr } = await supabaseClient
       .from('providers')
       .insert([{
         name: document.getElementById('fullname').value,
