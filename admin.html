@@ -597,7 +597,27 @@ function updateStats() {
   if (pending > 0) document.getElementById('statPendingTrend').textContent = `⚠ ${pending} بحاجة مراجعة`;
   if (approved > 0) document.getElementById('statApprovedTrend').textContent = `↑ ${approved} نشيط`;
 }
- 
+
+
+
+
+
+
+async function toggleFeatured(id, current) {
+  // ما كاتحسبش غير 4 featured فنفس الوقت
+  if (!current) {
+    const count = allProviders.filter(p => p.featured).length;
+    if (count >= 4) { showToast('⚠ 4 مهنيين مميزين كحد أقصى', 'warning'); return; }
+  }
+  const { error } = await db.from('providers').update({ featured: !current }).eq('id', id);
+  if (error) { showToast('خطأ: ' + error.message, 'error'); return; }
+  await loadProviders();
+  showToast(current ? '☆ تم إلغاء التمييز' : '⭐ تم التمييز بنجاح');
+}
+
+  
+
+  
 // ═══════════════════════════════════════════
 //  FILTER
 // ═══════════════════════════════════════════
@@ -660,7 +680,16 @@ function renderTable(providers) {
       p.status === 'approved' ? `
       <button class="btn-action btn-reject" onclick="promptAction('reject','${p.id}','${escHtml(p.name)}')">✕ رفض</button>` :
       `<button class="btn-action btn-approve" onclick="promptAction('approve','${p.id}','${escHtml(p.name)}')">✓ إعادة قبول</button>`;
- 
+
+
+
+    const featuredBtn = `<button class="btn-action" 
+  style="background:${p.featured ? '#FFF9E6' : '#f5f5f5'};color:${p.featured ? '#92400E' : '#666'}"
+  onclick="toggleFeatured('${p.id}', ${p.featured})">
+  ${p.featured ? '⭐ مميز' : '☆ ميّز'}
+</button>`;
+
+    
     const avatarHtml = p.profile_image
       ? `<img src="${escHtml(p.profile_image)}" alt="${escHtml(p.name)}">`
       : initials;
@@ -682,11 +711,15 @@ function renderTable(providers) {
       <td>${statusBadge}</td>
       <td style="font-size:12px;color:var(--gray-500,#6B7280)">${date}</td>
       <td>
-        <div class="action-btns">
-          <button class="btn-action btn-view-detail" onclick="openModal('${p.id}')">🔍 عرض</button>
-          ${actionBtns}
-          <button class="btn-action btn-delete" onclick="promptDelete('${p.id}','${escHtml(p.name)}')">🗑</button>
-        </div>
+<div class="action-btns">
+  <button class="btn-action btn-view-detail" onclick="openModal('${p.id}')">🔍 عرض</button>
+
+  ${actionBtns}
+
+  ${featuredBtn}
+
+  <button class="btn-action btn-delete" onclick="promptDelete('${p.id}','${escHtml(p.name)}')">🗑</button>
+</div>
       </td>
     </tr>`;
   }).join('');
