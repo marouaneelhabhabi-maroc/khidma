@@ -482,13 +482,14 @@ td{padding:.875rem 1rem;font-size:14px;color:var(--gray-800);vertical-align:midd
               <th>الخبرة</th>
               <th>الحالة</th>
               <th>تاريخ التسجيل</th>
+              <th>تمييز</th>
               <th>الإجراءات</th>
             </tr>
           </thead>
           <tbody id="providersTableBody">
-            <tr class="skeleton-row"><td colspan="8"><div class="skeleton" style="height:16px;width:80%;margin:4px 0"></div></td></tr>
-            <tr class="skeleton-row"><td colspan="8"><div class="skeleton" style="height:16px;width:60%"></div></td></tr>
-            <tr class="skeleton-row"><td colspan="8"><div class="skeleton" style="height:16px;width:70%"></div></td></tr>
+            <tr class="skeleton-row"><td colspan="9"><div class="skeleton" style="height:16px;width:80%;margin:4px 0"></div></td></tr>
+            <tr class="skeleton-row"><td colspan="9"><div class="skeleton" style="height:16px;width:60%"></div></td></tr>
+            <tr class="skeleton-row"><td colspan="9"><div class="skeleton" style="height:16px;width:70%"></div></td></tr>
           </tbody>
         </table>
       </div>
@@ -656,7 +657,7 @@ function renderTable(providers) {
  
   if (providers.length === 0) {
     tbody.innerHTML = `
-      <tr><td colspan="8">
+      <tr><td colspan="9">
         <div class="empty-state">
           <svg width="48" height="48" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/></svg>
           <h3>لا يوجد مزودون</h3>
@@ -711,12 +712,15 @@ function renderTable(providers) {
       <td>${statusBadge}</td>
       <td style="font-size:12px;color:var(--gray-500,#6B7280)">${date}</td>
       <td>
+  ${featuredBtn}
+      </td>
+      <td>
 <div class="action-btns">
   <button class="btn-action btn-view-detail" onclick="openModal('${p.id}')">🔍 عرض</button>
 
   ${actionBtns}
 
-  ${featuredBtn}
+  
 
   <button class="btn-action btn-delete" onclick="promptDelete('${p.id}','${escHtml(p.name)}')">🗑</button>
 </div>
