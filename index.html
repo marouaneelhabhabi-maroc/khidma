@@ -1396,6 +1396,8 @@ let panelSort = 'rating';
 let currentService = '';
 
 async function openServicePanel(serviceName, icon) {
+ console.log("clicked:", serviceName);
+
   currentService = serviceName;
   document.getElementById('panelTitle').textContent = serviceName;
   document.getElementById('panelIcon').textContent = icon;
