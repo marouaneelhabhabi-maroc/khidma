@@ -1586,17 +1586,41 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeService
 
  
   // Search example fill
-  function fillSearch(term) {
-    document.getElementById('heroSearch').value = term;
-    document.getElementById('heroSearch').focus();
-  }
+function fillSearch(term) {
+  document.getElementById('heroSearch').value = term;
+  handleSearch();
+}
  
-  function handleSearch() {
-    const q = document.getElementById('heroSearch').value;
-    if (q.trim()) {
-      alert('جاري البحث عن: ' + q + ' — ستتوفر النتائج قريباً!');
-    }
-  }
+async function handleSearch() {
+  const q = document.getElementById('heroSearch').value.trim();
+  const city = document.querySelector('.search-field select').value;
+  
+  if (!q && !city) return;
+
+  // فتح الـ service panel مباشرة
+  const icon = '🔍';
+  currentService = q;
+  document.getElementById('panelTitle').textContent = q || 'كل الخدمات';
+  document.getElementById('panelIcon').textContent = icon;
+  document.getElementById('panelCount').textContent = 'جاري البحث...';
+  document.getElementById('panelList').innerHTML =
+    '<div style="text-align:center;padding:3rem;color:#94A3B8">⏳ جاري البحث...</div>';
+
+  document.getElementById('serviceOverlay').style.opacity = '1';
+  document.getElementById('serviceOverlay').style.pointerEvents = 'all';
+  document.getElementById('servicePanel').style.transform = 'translateX(0)';
+  document.body.style.overflow = 'hidden';
+
+  // جلب النتائج من Supabase
+  let query = _sb.from('providers').select('*').eq('status', 'approved');
+  if (q) query = query.ilike('service_category', '%' + q + '%');
+  if (city) query = query.eq('city', city);
+
+  const { data } = await query;
+  panelProviders = data || [];
+  document.getElementById('panelCount').textContent = panelProviders.length + ' مهني متاح';
+  renderPanelList();
+}
  
   // Scroll reveal
   const reveals = document.querySelectorAll('.scroll-reveal, .step-item');
@@ -1642,6 +1666,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeService
       }
     });
   });
+
+
+
+document.getElementById('heroSearch').addEventListener('keydown', e => {
+  if (e.key === 'Enter') handleSearch();
+});
+
 </script>
  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
