@@ -737,6 +737,292 @@
   .footer-bottom-links { display: flex; gap: 24px; }
   .footer-bottom-links a { font-size: 13px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color .2s; }
   .footer-bottom-links a:hover { color: rgba(255,255,255,0.7); }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ══ OVERLAY ══ */
+.srch-overlay {
+  position: fixed; inset: 0; z-index: 500;
+  background: rgba(10,15,30,0.55);
+  backdrop-filter: blur(6px);
+  display: flex; flex-direction: column;
+  opacity: 0; pointer-events: none;
+  transition: opacity .35s cubic-bezier(.4,0,.2,1);
+}
+.srch-overlay.open { opacity: 1; pointer-events: all; }
+
+.srch-panel {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  transform: translateY(30px);
+  transition: transform .4s cubic-bezier(.34,1.2,.64,1);
+}
+.srch-overlay.open .srch-panel { transform: translateY(0); }
+
+.srch-header {
+  background: linear-gradient(135deg,#fff 0%,#f0f7ff 100%);
+  border-bottom: 1px solid var(--border);
+  padding: 20px 5%;
+  display: flex; align-items: center; gap: 16px;
+  flex-shrink: 0;
+  box-shadow: 0 4px 20px rgba(26,115,232,0.08);
+}
+.srch-mini {
+  flex: 1; background: #fff;
+  border: 1.5px solid rgba(26,115,232,0.2);
+  border-radius: 12px; padding: 10px 16px;
+  display: flex; align-items: center; gap: 10px;
+  box-shadow: var(--shadow-sm);
+}
+.srch-mini input {
+  border: none; background: transparent;
+  font-family: 'Cairo',sans-serif; font-size: 15px;
+  color: var(--text); outline: none; flex: 1;
+}
+.srch-close {
+  width: 44px; height: 44px; border-radius: 12px;
+  background: #fff; border: 1.5px solid var(--border);
+  cursor: pointer; display: flex; align-items: center;
+  justify-content: center; font-size: 20px;
+  color: var(--text-muted); transition: all .2s; flex-shrink: 0;
+}
+.srch-close:hover { background: #FEF2F2; border-color: #EF4444; color: #EF4444; }
+
+.srch-sortbar {
+  background: var(--bg-soft); border-bottom: 1px solid var(--border);
+  padding: 12px 5%; display: flex; align-items: center;
+  gap: 10px; flex-shrink: 0; overflow-x: auto;
+}
+.srch-sortbar::-webkit-scrollbar { display: none; }
+.srch-sort-btn {
+  padding: 6px 16px; border-radius: 50px;
+  border: 1.5px solid var(--border); background: #fff;
+  font-family: 'Cairo',sans-serif; font-size: 13px;
+  font-weight: 700; color: var(--text-muted);
+  cursor: pointer; transition: all .2s; white-space: nowrap;
+}
+.srch-sort-btn:hover { border-color: var(--blue); color: var(--blue); }
+.srch-sort-btn.active { background: var(--blue); border-color: var(--blue); color: #fff; }
+
+.srch-scroll {
+  flex: 1; overflow-y: auto; padding: 28px 5% 40px;
+}
+.srch-scroll::-webkit-scrollbar { width: 6px; }
+.srch-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
+
+.srch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px,1fr));
+  gap: 20px;
+}
+
+/* ══ PRO CARD ══ */
+.r-card {
+  background: #fff; border-radius: 20px;
+  border: 1.5px solid var(--border); overflow: hidden;
+  cursor: pointer;
+  transition: all .3s cubic-bezier(.25,.46,.45,.94);
+  box-shadow: 0 2px 10px rgba(26,115,232,0.06);
+  opacity: 0; transform: translateY(24px);
+  animation: rCardIn .5s cubic-bezier(.34,1.2,.64,1) forwards;
+}
+@keyframes rCardIn { to { opacity:1; transform:translateY(0); } }
+.r-card:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(26,115,232,0.16); border-color: rgba(26,115,232,0.3); }
+
+.r-card-accent {
+  height: 5px;
+  background: linear-gradient(90deg, var(--blue), var(--green));
+  transform: scaleX(0); transform-origin: right; transition: transform .3s;
+}
+.r-card:hover .r-card-accent { transform: scaleX(1); }
+
+.r-card-head { padding: 22px 20px 14px; display: flex; align-items: flex-start; gap: 14px; }
+.r-avatar {
+  width: 64px; height: 64px; border-radius: 50%;
+  background: linear-gradient(135deg,var(--blue-light),var(--green-light));
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; font-weight: 800; color: var(--blue-dark);
+  flex-shrink: 0; border: 3px solid #fff;
+  box-shadow: 0 4px 16px rgba(26,115,232,0.2);
+  overflow: hidden; transition: transform .3s;
+}
+.r-card:hover .r-avatar { transform: scale(1.06); }
+.r-avatar img { width:100%; height:100%; object-fit:cover; }
+
+.r-info { flex:1; min-width:0; }
+.r-name { font-size:16px; font-weight:800; color:var(--text); margin-bottom:3px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.r-service { font-size:13px; color:var(--blue); font-weight:600; margin-bottom:5px; }
+.r-city { display:flex; align-items:center; gap:4px; font-size:12px; color:var(--text-muted); }
+
+.r-head-right { display:flex; flex-direction:column; align-items:flex-end; gap:6px; flex-shrink:0; }
+.r-rating {
+  display:flex; align-items:center; gap:4px;
+  background:#FFF9E6; border:1px solid #FDE68A;
+  border-radius:50px; padding:4px 10px;
+  font-size:13px; font-weight:800; color:#92400E;
+}
+.r-avail {
+  display:flex; align-items:center; gap:5px;
+  font-size:11px; color:var(--green-dark); font-weight:700;
+}
+.r-avail::before {
+  content:''; width:7px; height:7px;
+  background:var(--green); border-radius:50%;
+  animation: blink2 1.5s ease-in-out infinite;
+}
+@keyframes blink2 { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+.r-stars { padding:0 20px 12px; display:flex; align-items:center; gap:3px; }
+.r-star { font-size:14px; }
+.r-star.f { color:#F59E0B; }
+.r-star.e { color:#E5E9F0; }
+.r-stars-count { font-size:12px; color:var(--text-muted); margin-right:4px; }
+
+.r-stats {
+  display:flex; margin:0 20px 14px;
+  background:var(--bg-soft); border-radius:12px; padding:12px;
+}
+.r-stat { flex:1; text-align:center; border-left:1px solid var(--border); }
+.r-stat:last-child { border-left:none; }
+.r-stat strong { display:block; font-size:14px; font-weight:800; color:var(--text); }
+.r-stat span { font-size:11px; color:var(--text-muted); }
+
+.r-footer {
+  padding:13px 20px; border-top:1px solid var(--border);
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--bg-soft);
+}
+.r-price { font-size:13px; color:var(--text-muted); }
+.r-price strong { color:var(--blue); font-size:16px; font-weight:800; }
+.r-btn {
+  background:linear-gradient(135deg,var(--blue),var(--blue-dark));
+  color:#fff; border:none; cursor:pointer;
+  padding:9px 18px; border-radius:50px;
+  font-family:'Cairo',sans-serif; font-size:13px; font-weight:700;
+  display:flex; align-items:center; gap:6px;
+  transition:all .2s; box-shadow:0 3px 10px rgba(26,115,232,0.3);
+}
+.r-btn:hover { transform:translateY(-2px); box-shadow:0 6px 18px rgba(26,115,232,0.4); }
+
+/* ══ DETAIL MODAL ══ */
+.r-modal-overlay {
+  position:fixed; inset:0; z-index:600;
+  background:rgba(10,15,30,0.7);
+  backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  padding:16px; opacity:0; pointer-events:none; transition:opacity .3s;
+}
+.r-modal-overlay.open { opacity:1; pointer-events:all; }
+.r-modal {
+  background:#fff; border-radius:24px;
+  width:100%; max-width:540px; max-height:90vh;
+  overflow-y:auto;
+  transform:scale(.9) translateY(20px);
+  transition:transform .35s cubic-bezier(.34,1.2,.64,1);
+  box-shadow:0 40px 100px rgba(0,0,0,0.3);
+}
+.r-modal-overlay.open .r-modal { transform:scale(1) translateY(0); }
+.r-modal::-webkit-scrollbar { width:4px; }
+.r-modal::-webkit-scrollbar-thumb { background:var(--border); border-radius:2px; }
+
+.r-modal-hero {
+  background:linear-gradient(135deg,#0F3460 0%,#1A73E8 55%,#00B87A 100%);
+  padding:28px 28px 22px; position:relative; overflow:hidden;
+}
+.r-modal-hero::before {
+  content:''; position:absolute; inset:0;
+  background:url("data:image/svg+xml,%3Csvg width='40' height='40' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M20 20v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+}
+.r-modal-close {
+  position:absolute; top:14px; left:14px;
+  width:34px; height:34px; border-radius:50%;
+  background:rgba(255,255,255,0.2); border:none;
+  color:#fff; font-size:17px; cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:background .2s;
+}
+.r-modal-close:hover { background:rgba(255,255,255,0.35); }
+.r-modal-top { display:flex; align-items:center; gap:16px; position:relative; z-index:1; }
+.r-modal-avatar {
+  width:80px; height:80px; border-radius:50%;
+  border:4px solid rgba(255,255,255,0.9);
+  box-shadow:0 8px 24px rgba(0,0,0,0.2);
+  overflow:hidden; flex-shrink:0;
+  background:linear-gradient(135deg,#EAF2FF,#E6F9F3);
+  display:flex; align-items:center; justify-content:center;
+  font-size:30px; font-weight:900; color:#fff;
+}
+.r-modal-avatar img { width:100%; height:100%; object-fit:cover; }
+.r-modal-name { font-size:20px; font-weight:900; color:#fff; margin-bottom:4px; }
+.r-modal-svc { font-size:13px; color:rgba(255,255,255,0.85); margin-bottom:8px; }
+.r-modal-tags { display:flex; gap:6px; flex-wrap:wrap; }
+.r-modal-tag {
+  background:rgba(255,255,255,0.18); border:1px solid rgba(255,255,255,0.3);
+  color:#fff; font-size:11px; font-weight:700; padding:3px 10px; border-radius:50px;
+}
+.r-modal-rating { position:relative; z-index:1; margin-top:14px; display:flex; align-items:center; gap:10px; }
+.r-modal-stars { display:flex; gap:2px; }
+.r-modal-star { font-size:15px; color:#FCD34D; }
+.r-modal-star.e { color:rgba(255,255,255,0.3); }
+.r-modal-rnum { font-size:22px; font-weight:900; color:#fff; }
+.r-modal-rcount { font-size:13px; color:rgba(255,255,255,0.7); }
+
+.r-modal-body { padding:22px 26px; }
+.r-modal-stitle { font-size:11px; font-weight:700; color:var(--text-muted); letter-spacing:1px; text-transform:uppercase; margin-bottom:10px; }
+.r-info-grid { display:grid; grid-template-columns:1fr 1fr; gap:10px; margin-bottom:18px; }
+.r-info-item { background:var(--bg-soft); border:1px solid var(--border); border-radius:12px; padding:12px 14px; }
+.r-info-label { font-size:11px; color:var(--text-muted); font-weight:600; margin-bottom:4px; }
+.r-info-val { font-size:15px; font-weight:800; color:var(--text); }
+.r-info-val.blue { color:var(--blue); }
+.r-info-val.green { color:var(--green-dark); }
+.r-modal-desc {
+  background:var(--bg-soft); border:1px solid var(--border);
+  border-radius:12px; padding:14px 16px; margin-bottom:18px;
+  font-size:14px; color:var(--text-muted); line-height:1.8;
+}
+.r-modal-divider { height:1px; background:var(--border); margin:18px 0; }
+.r-modal-actions { display:flex; flex-direction:column; gap:10px; }
+.r-wa {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:#25D366; color:#fff; text-decoration:none;
+  padding:15px; border-radius:14px;
+  font-family:'Cairo',sans-serif; font-size:16px; font-weight:800;
+  transition:all .2s; box-shadow:0 4px 16px rgba(37,211,102,0.3);
+}
+.r-wa:hover { background:#1ebe5a; transform:translateY(-2px); }
+.r-call {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  background:var(--blue-light); color:var(--blue-dark); text-decoration:none;
+  padding:13px; border-radius:14px;
+  font-family:'Cairo',sans-serif; font-size:15px; font-weight:700;
+  transition:all .2s; border:1.5px solid rgba(26,115,232,0.2);
+}
+.r-call:hover { background:var(--blue); color:#fff; border-color:var(--blue); }
+
+.srch-empty { grid-column:1/-1; text-align:center; padding:5rem 2rem; color:var(--text-muted); }
+.srch-empty .ei { font-size:4rem; margin-bottom:1rem; }
+.srch-empty h3 { font-size:20px; font-weight:800; color:var(--text); margin-bottom:8px; }
+
+
+
+
+
+
+
+
  
   /* ───── ANIMATIONS ───── */
   @keyframes fadeDown {
@@ -1374,6 +1660,65 @@
   </div>
 </div>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- ══ SEARCH OVERLAY ══ -->
+<div class="srch-overlay" id="srchOverlay">
+  <div class="srch-panel">
+    <div class="srch-header">
+      <div class="srch-mini">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input type="text" id="srchInput" placeholder="ابحث مرة أخرى..." onkeyup="srchFilter()">
+      </div>
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0">
+        <div style="display:flex;align-items:center;gap:6px;background:var(--blue-light);border:1px solid rgba(26,115,232,0.2);border-radius:50px;padding:6px 14px;font-size:13px;font-weight:700;color:var(--blue-dark)">
+          <svg width="12" height="12" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+          <span id="srchCity">كل المدن</span>
+        </div>
+        <span id="srchCount" style="font-size:13px;color:var(--text-muted);font-weight:600;white-space:nowrap">جاري التحميل...</span>
+      </div>
+      <button class="srch-close" onclick="closeSrch()">✕</button>
+    </div>
+
+    <div class="srch-sortbar">
+      <span style="font-size:13px;color:var(--text-muted);font-weight:600;white-space:nowrap">ترتيب:</span>
+      <button class="srch-sort-btn active" id="ssort-rating" onclick="setSrchSort('rating')">⭐ الأعلى تقييماً</button>
+      <button class="srch-sort-btn" id="ssort-experience" onclick="setSrchSort('experience')">🏆 الأكثر خبرة</button>
+      <button class="srch-sort-btn" id="ssort-price" onclick="setSrchSort('price')">💰 الأقل سعراً</button>
+    </div>
+
+    <div class="srch-scroll">
+      <div class="srch-grid" id="srchGrid"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ══ DETAIL MODAL ══ -->
+<div class="r-modal-overlay" id="rModalOverlay" onclick="if(event.target===this)closeRModal()">
+  <div class="r-modal" id="rModal"></div>
+</div>
+
+
+
+
+
+
+
+ 
+
+
+ 
 <style>
 .panel-pro-card {
   background:#fff;border-radius:14px;border:1.5px solid #E5E9F0;
@@ -1403,6 +1748,203 @@
 .psort.active { background:rgba(255,255,255,0.9) !important; color:var(--blue) !important; }
 </style>
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+/* ══ SEARCH OVERLAY — SUPABASE ══ */
+let srchProviders = [];
+let srchSort = 'rating';
+let srchTerm = '';
+let srchCityVal = '';
+
+// ── غير handleSearch الموجودة ──
+function handleSearch() {
+  srchTerm = document.getElementById('heroSearch').value.trim();
+  srchCityVal = document.querySelector('.hero select') ? document.querySelector('.hero select').value : '';
+  openSrch();
+}
+
+// ── غير fillSearch الموجودة ──
+function fillSearch(term) {
+  document.getElementById('heroSearch').value = term;
+  srchTerm = term;
+  srchCityVal = document.querySelector('.hero select') ? document.querySelector('.hero select').value : '';
+  openSrch();
+}
+
+async function openSrch() {
+  document.getElementById('srchOverlay').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.getElementById('srchInput').value = srchTerm;
+  document.getElementById('srchCity').textContent = srchCityVal || 'كل المدن';
+  document.getElementById('srchGrid').innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:4rem;color:#94A3B8;font-size:15px">⏳ جاري التحميل...</div>';
+
+  // ── Supabase query ──
+  let query = _sb.from('providers').select('*').eq('status','approved');
+  if (srchTerm) query = query.ilike('service_category', `%${srchTerm}%`);
+  if (srchCityVal) query = query.eq('city', srchCityVal);
+
+  const { data } = await query;
+  srchProviders = data || [];
+  srchRender();
+}
+
+function closeSrch() {
+  document.getElementById('srchOverlay').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function setSrchSort(type) {
+  srchSort = type;
+  document.querySelectorAll('.srch-sort-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('ssort-' + type).classList.add('active');
+  srchRender();
+}
+
+function srchFilter() {
+  const q = document.getElementById('srchInput').value.toLowerCase();
+  const filtered = srchProviders.filter(p =>
+    !q || (p.name||'').toLowerCase().includes(q) || (p.service_category||'').toLowerCase().includes(q)
+  );
+  srchRenderList(filtered);
+}
+
+function srchRender() { srchRenderList(srchProviders); }
+
+function srchRenderList(list) {
+  document.getElementById('srchCount').textContent = list.length + ' مهني متاح';
+  const grid = document.getElementById('srchGrid');
+
+  if (!list.length) {
+    grid.innerHTML = '<div class="srch-empty"><div class="ei">🔍</div><h3>ما لقيناش نتائج</h3><p>جرب كلمة أخرى أو غير المدينة</p></div>';
+    return;
+  }
+
+  const sorted = [...list].sort((a,b) => {
+    if (srchSort==='rating') return (b.rating||0)-(a.rating||0);
+    if (srchSort==='experience') return (b.experience_years||0)-(a.experience_years||0);
+    if (srchSort==='price') {
+      return parseFloat((a.price||'9999').replace(/[^\d.]/g,'')) - parseFloat((b.price||'9999').replace(/[^\d.]/g,''));
+    }
+    return 0;
+  });
+
+  grid.innerHTML = sorted.map((p,i) => {
+    const r = parseFloat(p.rating)||0;
+    const stars = [1,2,3,4,5].map(s=>`<span class="r-star ${s<=Math.round(r)?'f':'e'}">★</span>`).join('');
+    const av = p.profile_image ? `<img src="${p.profile_image}" alt="">` : (p.name||'?')[0];
+    const delay = (i*0.06).toFixed(2);
+    return `
+    <div class="r-card" style="animation-delay:${delay}s" onclick="openRModal('${p.id}')">
+      <div class="r-card-accent"></div>
+      <div class="r-card-head">
+        <div class="r-avatar">${av}</div>
+        <div class="r-info">
+          <div class="r-name">${p.name||'—'}</div>
+          <div class="r-service">${p.service_category||'—'}</div>
+          <div class="r-city">
+            <svg width="11" height="11" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            ${p.city||'—'}
+          </div>
+        </div>
+        <div class="r-head-right">
+          <div class="r-rating">⭐ ${r||'—'}</div>
+          <div class="r-avail">متاح</div>
+        </div>
+      </div>
+      <div class="r-stars">${stars}<span class="r-stars-count">(${p.reviews_count||0})</span></div>
+      <div class="r-stats">
+        <div class="r-stat"><strong>${p.experience_years||'—'}</strong><span>سنة خبرة</span></div>
+        <div class="r-stat"><strong>${p.reviews_count||0}</strong><span>تقييم</span></div>
+        <div class="r-stat"><strong style="color:var(--blue);font-size:12px">${p.price||'—'}</strong><span>السعر</span></div>
+      </div>
+      <div class="r-footer">
+        <div class="r-price">من <strong>${p.price||'—'}</strong></div>
+        <button class="r-btn">عرض التفاصيل ←</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function openRModal(id) {
+  const p = srchProviders.find(x => x.id == id);
+  if (!p) return;
+  const r = parseFloat(p.rating)||0;
+  const stars = [1,2,3,4,5].map(s=>`<span class="r-modal-star ${s<=Math.round(r)?'':'e'}">★</span>`).join('');
+  const av = p.profile_image ? `<img src="${p.profile_image}" alt="">` : (p.name||'?')[0];
+  const wa = (p.whatsapp||p.phone||'').replace(/^0/,'212');
+
+  document.getElementById('rModal').innerHTML = `
+    <div class="r-modal-hero">
+      <button class="r-modal-close" onclick="closeRModal()">✕</button>
+      <div class="r-modal-top">
+        <div class="r-modal-avatar">${av}</div>
+        <div>
+          <div class="r-modal-name">${p.name||'—'}</div>
+          <div class="r-modal-svc">${p.service_category||'—'}</div>
+          <div class="r-modal-tags">
+            <span class="r-modal-tag">📍 ${p.city||'—'}</span>
+            <span class="r-modal-tag">🏆 ${p.experience_years||'—'} سنة</span>
+            <span class="r-modal-tag">✅ متاح الآن</span>
+          </div>
+        </div>
+      </div>
+      <div class="r-modal-rating">
+        <div class="r-modal-stars">${stars}</div>
+        <span class="r-modal-rnum">${r}</span>
+        <span class="r-modal-rcount">(${p.reviews_count||0} تقييم)</span>
+      </div>
+    </div>
+    <div class="r-modal-body">
+      <div class="r-modal-stitle">معلومات أساسية</div>
+      <div class="r-info-grid">
+        <div class="r-info-item"><div class="r-info-label">💰 السعر</div><div class="r-info-val blue">${p.price||'—'}</div></div>
+        <div class="r-info-item"><div class="r-info-label">🏆 الخبرة</div><div class="r-info-val">${p.experience_years||'—'} سنوات</div></div>
+        <div class="r-info-item"><div class="r-info-label">📍 المدينة</div><div class="r-info-val">${p.city||'—'}</div></div>
+        <div class="r-info-item"><div class="r-info-label">⭐ التقييم</div><div class="r-info-val green">${r} / 5</div></div>
+      </div>
+      ${p.service_description ? `<div class="r-modal-stitle">عن الخدمة</div><div class="r-modal-desc">${p.service_description}</div>` : ''}
+      <div class="r-modal-divider"></div>
+      <div class="r-modal-stitle">تواصل مباشرة</div>
+      <div class="r-modal-actions">
+        <a class="r-wa" href="https://wa.me/${wa}" target="_blank">
+          <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a5.25 5.25 0 00-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479s1.065 2.875 1.213 3.074c.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12.05 0C5.495 0 .157 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893A11.821 11.821 0 0020.451 3.63 11.815 11.815 0 0012.05 0z"/></svg>
+          تواصل عبر واتساب
+        </a>
+        <a class="r-call" href="tel:${p.phone||''}" >📞 اتصل مباشرة — ${p.phone||'—'}</a>
+      </div>
+    </div>`;
+
+  document.getElementById('rModalOverlay').classList.add('open');
+}
+
+function closeRModal() {
+  document.getElementById('rModalOverlay').classList.remove('open');
+}
+
+// ESC
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') { closeRModal(); closeSrch(); }
+});
+</script>
+
+
+
+
+ 
 <script>
 let panelProviders = [];
 let panelSort = 'rating';
