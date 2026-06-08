@@ -248,20 +248,6 @@
     transform: translateY(-2px);
   }
 
-.btn-signup {
-    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-    color: #fff;
-    border: none;
-    padding: 8px 22px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
-    box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
-  }
 
 
 
@@ -321,10 +307,6 @@
     color: #e53e3e;
   }
 
-  .btn-signup:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(26, 115, 232, 0.4);
-  }
   .nav-cta {
     background: linear-gradient(135deg, var(--blue), var(--blue-dark));
     color: #fff !important;
@@ -395,10 +377,7 @@
   }
 
 
-    .mobile-signup {
-    background: linear-gradient(135deg, var(--blue), var(--blue-dark));
-    color: #fff;
-  }
+
 
 
 
@@ -415,7 +394,7 @@
   /* ───── HERO ───── */
   .hero {
     min-height: 100vh;
-    padding: 100px 3% 100px;
+    padding: 80px 3% 4px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-items: center;
@@ -944,6 +923,28 @@
     padding-top: 20px; font-weight: 500;
   }
  
+
+.btn-browse {
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #fff;
+  border: none;
+  padding: 8px 22px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  box-shadow: 0 2px 8px rgba(26, 115, 232, 0.3);
+}
+
+.btn-browse:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(26, 115, 232, 0.4);
+}
+
+
   .testimonial-author { display: flex; align-items: center; gap: 14px; }
   .author-avatar {
     width: 46px; height: 46px; border-radius: 50%;
@@ -998,8 +999,8 @@
   }
   .btn-cta-white:hover { transform: translateY(-4px) scale(1.02); box-shadow: 0 16px 48px rgba(0,0,0,0.3); }
   .logo-khidma {
-    width: 50px;
-    height: 50px;
+    width: 80px;
+    height: 72px;
     object-fit: contain;
     border-radius: 12px;
   }
@@ -1090,6 +1091,11 @@
   /* وضع العنصر أسفل الشعار في الترتيب المرن */
   position: relative; 
 }
+
+
+
+
+
 
 /* تعديل الـ Nav ليتناسب مع وجود العنصر الجديد بالهاتف والكمبيوتر */
 nav {
@@ -1249,42 +1255,57 @@ nav {
     <!-- Desktop Links -->
     <ul class="nav-links">
       <li><a href="#services">الخدمات</a></li>
-      <li><a href="#how">كيف يعمل</a></li>
+     
       <li><a href="#pros">المهنيون</a></li>
       <li><a href="#about">من نحن</a></li>
+      
     </ul>
 
+
+<div class="nav-auth" id="navAuth">
+  <a href="login.html" class="btn-login">تسجيل الدخول</a>
+
+</div>  
+
     <!-- Auth Buttons (Desktop) -->
-    <div class="nav-auth" id="navAuth">
-      <!-- سيتم تعبئتها بـ JS -->
-    </div>
+<!-- Auth Buttons (Desktop) -->
+
 
     <!-- Mobile Hamburger -->
     <div class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
       <span></span><span></span><span></span>
     </div>
+
+    
   </div>
 
   <!-- Live Badge (تحت الـ Navbar) -->
-  <div id="liveBadge">
-    <div class="badge-dot green"></div>
-    +300 مهني متصل الآن
-  </div>
+
 
   <!-- Mobile Menu -->
   <div class="nav-mobile-menu" id="mobileMenu">
     <a href="#services" onclick="toggleMenu()">الخدمات</a>
-    <a href="#how" onclick="toggleMenu()">كيف يعمل</a>
+    
     <a href="#pros" onclick="toggleMenu()">المهنيون</a>
     <a href="#about" onclick="toggleMenu()">من نحن</a>
     <div id="mobileAuthLinks"></div>
   </div>
+  
+
+
 </nav>
+
  
 <!-- ━━━━━ HERO ━━━━━ -->
 <section class="hero" id="home">
   <div class="hero-content">
     <div class="hero-badge">
+
+       <div id="liveBadge">
+        <div class="badge-dot green"></div>
+        +253 مهني متصل الآن
+       </div>
+
       <div class="dot"></div>
       ✅ المنصة الأولى للخدمات في المغرب
     </div>
@@ -1638,7 +1659,7 @@ nav {
         <li><a href="#home">الرئيسية</a></li>
         <li><a href="#services">الخدمات</a></li>
         <li><a href="#pros">المهنيون</a></li>
-        <li><a href="#how">كيف يعمل</a></li>
+      
         <li><a href="#about">من نحن</a></li>
       </ul>
     </div>
@@ -2006,51 +2027,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeService
 
 
 
- function updateAuthUI() {
-    const loggedInUser = localStorage.getItem('loggedInUser');
-    const navAuth = document.getElementById('navAuth');
-    const mobileAuthLinks = document.getElementById('mobileAuthLinks');
 
-    if (loggedInUser) {
-      const user = JSON.parse(loggedInUser);
-      const initial = user.name ? user.name.charAt(0).toUpperCase() : 'م';
-
-      // Desktop UI
-      navAuth.innerHTML = `
-        <div class="user-profile" onclick="toggleLogoutMenu(event)">
-          <div class="user-avatar">${initial}</div>
-          <div class="user-info">
-            <div class="user-name">${user.name}</div>
-            <div class="logout-btn" onclick="logout(event)">تسجيل خروج</div>
-          </div>
-        </div>
-      `;
-
-      // Mobile UI
-      mobileAuthLinks.innerHTML = `
-        <div class="mobile-user-info">
-          <div class="user-avatar" style="width:40px;height:40px">${initial}</div>
-          <div style="flex:1">
-            <div style="font-weight:800;color:var(--text)">${user.name}</div>
-            <div style="font-size:12px;color:var(--text-muted)">${user.email || ''}</div>
-          </div>
-          <div class="logout-btn" onclick="logout(event)" style="color:#e53e3e">خروج</div>
-        </div>
-      `;
-    } else {
-      // Desktop UI
-      navAuth.innerHTML = `
-        <a href="login.html" class="btn-login">تسجيل الدخول</a>
-        <a href="signup.html" class="btn-signup">إنشاء حساب</a>
-      `;
-
-      // Mobile UI
-      mobileAuthLinks.innerHTML = `
-        <a href="login.html" class="mobile-login">تسجيل الدخول</a>
-        <a href="signup.html" class="mobile-signup">إنشاء حساب</a>
-      `;
-    }
-  }
 
   // تسجيل الخروج
   function logout(event) {
