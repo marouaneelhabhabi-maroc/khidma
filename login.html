@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>خدماتي | تسجيل الدخول</title>
+ 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+ 
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+ 
+:root {
+  --blue: #1A73E8;
+  --blue-dark: #1557B0;
+  --blue-light: #EAF2FF;
+  --green: #00B87A;
+  --green-dark: #008F5F;
+  --green-light: #E6F9F3;
+  --text: #1A1D23;
+  --text-muted: #6B7280;
+  --border: #E5E9F0;
+  --bg: #FFFFFF;
+  --bg-soft: #F8FAFD;
+  --shadow-sm: 0 2px 8px rgba(26,115,232,0.08);
+  --shadow-md: 0 8px 32px rgba(26,115,232,0.12);
+  --shadow-lg: 0 20px 60px rgba(26,115,232,0.15);
+  --radius: 14px;
+  --radius-lg: 20px;
+}
+ 
+html { scroll-behavior: smooth; }
+ 
+body {
+  font-family: 'Cairo', 'Tajawal', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.7;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow-x: hidden;
+}
+ 
+/* ── BACKGROUND ── */
+.bg-wrap {
+  position: fixed; inset: 0; z-index: 0;
+  background: linear-gradient(150deg, #FFFFFF 0%, #F0F6FF 40%, #E8F8F3 100%);
+}
+.bg-wrap::before {
+  content: '';
+  position: absolute; top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(26,115,232,0.07) 0%, transparent 70%);
+}
+.bg-wrap::after {
+  content: '';
+  position: absolute; bottom: -150px; left: -150px;
+  width: 500px; height: 500px;
+  background: radial-gradient(circle, rgba(0,184,122,0.08) 0%, transparent 70%);
+}
+ 
+/* floating shapes */
+.shape {
+  position: absolute; border-radius: 50%;
+  opacity: 0.5; filter: blur(1px);
+}
+.shape-1 {
+  width: 80px; height: 80px;
+  background: linear-gradient(135deg, var(--blue-light), #C3DEFF);
+  top: 15%; left: 8%;
+  animation: floatShape 6s ease-in-out infinite;
+}
+.shape-2 {
+  width: 50px; height: 50px;
+  background: linear-gradient(135deg, var(--green-light), #A8EDD3);
+  top: 60%; right: 6%;
+  animation: floatShape 8s ease-in-out infinite reverse;
+}
+.shape-3 {
+  width: 35px; height: 35px;
+  background: linear-gradient(135deg, #FFF9E6, #FDE68A);
+  bottom: 20%; left: 15%;
+  animation: floatShape 5s ease-in-out infinite 1s;
+}
+ 
+@keyframes floatShape {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50%       { transform: translateY(-20px) rotate(10deg); }
+}
+ 
+/* ── CARD ── */
+.login-wrap {
+  position: relative; z-index: 1;
+  width: 100%; max-width: 460px;
+  padding: 16px;
+}
+ 
+.login-card {
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: blur(24px);
+  border-radius: var(--radius-lg);
+  border: 1.5px solid rgba(26,115,232,0.12);
+  box-shadow: var(--shadow-lg);
+  padding: 44px 40px 36px;
+  animation: slideUp .6s cubic-bezier(.25,.46,.45,.94) both;
+}
+ 
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+ 
+/* ── LOGO ── */
+.card-logo {
+  text-align: center;
+  margin-bottom: 28px;
+  animation: fadeDown .5s .1s ease both;
+}
+.logo-text {
+  font-size: 32px; font-weight: 900;
+  background: linear-gradient(135deg, var(--blue), var(--green));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  display: block; letter-spacing: -0.5px;
+  text-decoration: none;
+}
+.logo-sub {
+  font-size: 13px; color: var(--text-muted);
+  font-weight: 500; margin-top: 4px;
+}
+ 
+/* ── TABS ── */
+.auth-tabs {
+  display: flex; gap: 0;
+  background: var(--bg-soft);
+  border-radius: 10px;
+  padding: 4px;
+  margin-bottom: 28px;
+  animation: fadeDown .5s .15s ease both;
+}
+.tab-btn {
+  flex: 1; padding: 10px;
+  border: none; background: transparent;
+  font-family: 'Cairo', sans-serif;
+  font-size: 14px; font-weight: 700;
+  color: var(--text-muted); cursor: pointer;
+  border-radius: 8px;
+  transition: all .25s;
+}
+.tab-btn.active {
+  background: #fff;
+  color: var(--blue);
+  box-shadow: 0 2px 8px rgba(26,115,232,0.12);
+}
+ 
+/* ── FORM ── */
+.form-group {
+  margin-bottom: 18px;
+  animation: fadeDown .5s ease both;
+}
+.form-group:nth-child(1) { animation-delay: .2s; }
+.form-group:nth-child(2) { animation-delay: .25s; }
+.form-group:nth-child(3) { animation-delay: .3s; }
+ 
+.form-label {
+  display: block;
+  font-size: 13px; font-weight: 700;
+  color: var(--text); margin-bottom: 8px;
+}
+ 
+.input-wrap {
+  position: relative;
+}
+.input-icon {
+  position: absolute; top: 50%; right: 14px;
+  transform: translateY(-50%);
+  color: var(--text-muted); pointer-events: none;
+  display: flex;
+}
+.form-input {
+  width: 100%;
+  padding: 13px 42px 13px 16px;
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 15px; color: var(--text);
+  background: var(--bg-soft);
+  outline: none;
+  transition: all .25s;
+  direction: rtl;
+}
+.form-input::placeholder { color: var(--text-muted); font-size: 13px; }
+.form-input:focus {
+  border-color: var(--blue);
+  background: #fff;
+  box-shadow: 0 0 0 3px rgba(26,115,232,0.1);
+}
+.form-input.error {
+  border-color: #EF4444;
+  box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+}
+ 
+/* toggle password */
+.toggle-pass {
+  position: absolute; top: 50%; left: 14px;
+  transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  color: var(--text-muted); display: flex;
+  transition: color .2s;
+}
+.toggle-pass:hover { color: var(--blue); }
+ 
+/* ── FORGOT ── */
+.forgot-link {
+  display: block; text-align: left;
+  font-size: 12px; color: var(--blue);
+  text-decoration: none; font-weight: 600;
+  margin-top: 6px; margin-bottom: 4px;
+  transition: color .2s;
+}
+.forgot-link:hover { color: var(--blue-dark); }
+ 
+/* ── SUBMIT BTN ── */
+.submit-btn {
+  width: 100%;
+  padding: 14px;
+  background: linear-gradient(135deg, var(--blue), var(--blue-dark));
+  color: #fff; border: none; cursor: pointer;
+  border-radius: 50px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 16px; font-weight: 700;
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  box-shadow: 0 4px 20px rgba(26,115,232,0.35);
+  transition: all .25s;
+  margin-top: 8px;
+  animation: fadeDown .5s .35s ease both;
+}
+.submit-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 28px rgba(26,115,232,0.45);
+}
+.submit-btn:disabled { opacity: .7; cursor: not-allowed; }
+ 
+/* spinner */
+.spinner {
+  width: 18px; height: 18px;
+  border: 2.5px solid rgba(255,255,255,0.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  display: none;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+ 
+/* ── DIVIDER ── */
+.divider {
+  display: flex; align-items: center; gap: 12px;
+  margin: 20px 0;
+  animation: fadeDown .5s .4s ease both;
+}
+.divider::before, .divider::after {
+  content: ''; flex: 1; height: 1px; background: var(--border);
+}
+.divider span { font-size: 12px; color: var(--text-muted); font-weight: 600; white-space: nowrap; }
+ 
+/* ── SOCIAL ── */
+.social-login {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 10px;
+  animation: fadeDown .5s .45s ease both;
+}
+.social-btn {
+  display: flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 11px;
+  background: var(--bg-soft);
+  border: 1.5px solid var(--border);
+  border-radius: 10px;
+  font-family: 'Cairo', sans-serif;
+  font-size: 13px; font-weight: 700;
+  color: var(--text); cursor: pointer; text-decoration: none;
+  transition: all .2s;
+}
+.social-btn:hover { border-color: var(--blue); background: var(--blue-light); color: var(--blue); }
+ 
+/* ── ALERT ── */
+.alert {
+  padding: 12px 16px;
+  border-radius: 10px;
+  font-size: 13px; font-weight: 600;
+  display: none; align-items: center; gap: 8px;
+  margin-bottom: 16px;
+}
+.alert.show { display: flex; }
+.alert.error   { background: #FEF2F2; color: #DC2626; border: 1px solid #FCA5A5; }
+.alert.success { background: var(--green-light); color: var(--green-dark); border: 1px solid #6EE7B7; }
+ 
+/* ── FOOTER NOTE ── */
+.card-footer-note {
+  text-align: center;
+  font-size: 13px; color: var(--text-muted);
+  margin-top: 20px;
+  animation: fadeDown .5s .5s ease both;
+}
+.card-footer-note a { color: var(--blue); font-weight: 700; text-decoration: none; }
+.card-footer-note a:hover { text-decoration: underline; }
+ 
+/* ── REGISTER EXTRA ── */
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+ 
+/* role selector */
+.role-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 18px; }
+.role-card {
+  border: 1.5px solid var(--border);
+  border-radius: 10px; padding: 14px 10px;
+  text-align: center; cursor: pointer;
+  transition: all .2s; background: var(--bg-soft);
+}
+.role-card:hover { border-color: var(--blue); background: var(--blue-light); }
+.role-card.selected { border-color: var(--blue); background: var(--blue-light); box-shadow: 0 0 0 3px rgba(26,115,232,0.1); }
+.role-card .role-icon { font-size: 24px; margin-bottom: 6px; }
+.role-card .role-label { font-size: 12px; font-weight: 700; color: var(--text); }
+.role-card.selected .role-label { color: var(--blue); }
+ 
+/* ── RESPONSIVE ── */
+@media (max-width: 480px) {
+  .login-card { padding: 32px 20px 28px; }
+  .form-row { grid-template-columns: 1fr; }
+  .social-login { grid-template-columns: 1fr; }
+}
+ 
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+</style>
+</head>
+<body>
+ 
+<!-- background -->
+<div class="bg-wrap">
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+</div>
+ 
+<!-- card -->
+<div class="login-wrap">
+  <div class="login-card">
+ 
+    <!-- logo -->
+    <div class="card-logo">
+      <a href="index.html" class="logo-text">خدما<b>تي</b></a>
+      <p class="logo-sub">المنصة الأولى للخدمات فالمغرب</p>
+    </div>
+ 
+    <!-- tabs -->
+    <div class="auth-tabs">
+      <button class="tab-btn active" onclick="switchTab('login')">تسجيل الدخول</button>
+      <button class="tab-btn" onclick="switchTab('register')">إنشاء حساب</button>
+    </div>
+ 
+    <!-- alert -->
+    <div class="alert" id="alertBox"></div>
+ 
+    <!-- ── LOGIN FORM ── -->
+    <form id="loginForm" onsubmit="handleLogin(event)" autocomplete="on">
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          </span>
+          <input type="email" id="loginEmail" class="form-input"
+            placeholder="exemple@gmail.com" required autocomplete="email" />
+        </div>
+      </div>
+ 
+      <div class="form-group">
+        <label class="form-label">كلمة السر</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="loginPass" class="form-input"
+            placeholder="••••••••" required autocomplete="current-password" />
+          <button type="button" class="toggle-pass" onclick="togglePassword('loginPass', this)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" id="eyeLogin">
+              <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/>
+            </svg>
+          </button>
+        </div>
+        <a href="#" class="forgot-link" onclick="handleForgotPassword(event)">نسيت كلمة السر؟</a>
+      </div>
+ 
+      <button type="submit" class="submit-btn" id="loginBtn">
+        <span id="loginBtnText">دخول ←</span>
+        <div class="spinner" id="loginSpinner"></div>
+      </button>
+    </form>
+ 
+    <!-- ── REGISTER FORM ── -->
+    <form id="registerForm" style="display:none" onsubmit="handleRegister(event)" autocomplete="on">
+ 
+      <!-- role picker -->
+      <div style="margin-bottom:16px">
+        <label class="form-label">أنا...</label>
+        <div class="role-grid">
+          <div class="role-card selected" onclick="selectRole('client', this)">
+            <div class="role-icon">🛒</div>
+            <div class="role-label">زبون</div>
+          </div>
+          <div class="role-card" onclick="selectRole('pro', this)">
+            <div class="role-icon">🔧</div>
+            <div class="role-label">مهني / حرفي</div>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">الاسم الكامل</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </span>
+            <input type="text" id="regName" class="form-input"
+              placeholder="محمد أمين" required autocomplete="name" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">المدينة</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg>
+            </span>
+            <select id="regCity" class="form-input" required>
+              <option value="">اختر</option>
+              <option>الدار البيضاء</option>
+              <option>الرباط</option>
+              <option>فاس</option>
+              <option>مراكش</option>
+              <option>طنجة</option>
+              <option>أكادير</option>
+              <option>مكناس</option>
+              <option>وجدة</option>
+              <option>سلا</option>
+              <option>تطوان</option>
+            </select>
+          </div>
+        </div>
+      </div>
+ 
+      <div class="form-group">
+        <label class="form-label">البريد الإلكتروني</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,12 2,6"/></svg>
+          </span>
+          <input type="email" id="regEmail" class="form-input"
+            placeholder="exemple@gmail.com" required autocomplete="email" />
+        </div>
+      </div>
+ 
+      <div class="form-group">
+        <label class="form-label">كلمة السر</label>
+        <div class="input-wrap">
+          <span class="input-icon">
+            <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          </span>
+          <input type="password" id="regPass" class="form-input"
+            placeholder="8 أحرف على الأقل" required autocomplete="new-password"
+            oninput="checkPassStrength(this.value)" />
+          <button type="button" class="toggle-pass" onclick="togglePassword('regPass', this)">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+          </button>
+        </div>
+        <!-- strength bar -->
+        <div style="margin-top:8px;display:flex;gap:4px" id="strengthBars">
+          <div style="flex:1;height:4px;border-radius:4px;background:#E5E9F0;transition:background .3s" id="bar1"></div>
+          <div style="flex:1;height:4px;border-radius:4px;background:#E5E9F0;transition:background .3s" id="bar2"></div>
+          <div style="flex:1;height:4px;border-radius:4px;background:#E5E9F0;transition:background .3s" id="bar3"></div>
+          <div style="flex:1;height:4px;border-radius:4px;background:#E5E9F0;transition:background .3s" id="bar4"></div>
+        </div>
+        <div id="strengthLabel" style="font-size:11px;color:var(--text-muted);margin-top:4px"></div>
+      </div>
+ 
+      <button type="submit" class="submit-btn" id="regBtn"
+        style="background:linear-gradient(135deg,var(--green),var(--green-dark));box-shadow:0 4px 20px rgba(0,184,122,0.35)">
+        <span id="regBtnText">إنشاء الحساب ←</span>
+        <div class="spinner" id="regSpinner"></div>
+      </button>
+    </form>
+ 
+    <div class="divider"><span>أو</span></div>
+ 
+    <!-- social -->
+    <div class="social-login">
+      <button class="social-btn" onclick="handleGoogle()">
+        <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.27 9.77A7.24 7.24 0 0 1 12 4.8c1.77 0 3.37.64 4.61 1.69l3.44-3.44A12 12 0 0 0 0 12c0 1.99.49 3.86 1.36 5.51l3.91-3.74z"/><path fill="#34A853" d="M16.44 18.91A7.2 7.2 0 0 1 12 20.4c-3 0-5.59-1.83-6.77-4.46L1.36 17.5A12 12 0 0 0 24 12c0-.74-.07-1.46-.2-2.16H12v4.57h6.78a5.8 5.8 0 0 1-2.34 4.5z"/><path fill="#FBBC05" d="M5.23 15.94A7.1 7.1 0 0 1 4.8 12c0-1.38.39-2.67 1.06-3.77L1.95 4.49A11.93 11.93 0 0 0 0 12c0 1.93.46 3.75 1.28 5.37z"/><path fill="#4285F4" d="M12 24c3.27 0 6.01-1.08 8.01-2.93l-3.71-2.95A7.2 7.2 0 0 1 12 19.2a7.24 7.24 0 0 1-6.77-4.46l-3.91 3.74C3.64 21.59 7.55 24 12 24z"/></svg>
+        Google
+      </button>
+      <button class="social-btn" onclick="handleFacebook()">
+        <svg width="18" height="18" fill="#1877F2" viewBox="0 0 24 24"><path d="M24 12.073C24 5.405 18.627 0 12 0S0 5.405 0 12.073C0 18.1 4.388 23.094 10.125 24v-8.437H7.078v-3.49h3.047V9.41c0-3.025 1.792-4.697 4.533-4.697 1.312 0 2.686.235 2.686.235v2.97h-1.513c-1.491 0-1.956.932-1.956 1.886v2.269h3.328l-.532 3.49h-2.796V24C19.612 23.094 24 18.1 24 12.073z"/></svg>
+        Facebook
+      </button>
+    </div>
+ 
+    <!-- footer note -->
+    <p class="card-footer-note">
+      بالدخول، كتقبل <a href="#">شروط الاستخدام</a> و<a href="#">سياسة الخصوصية</a>
+    </p>
+ 
+  </div>
+</div>
+ 
+<!-- Supabase SDK -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+ 
+<script>
+// ── SUPABASE CONFIG ──────────────────────────────────────────────────
+const _sb = window.supabase.createClient(
+  "https://kacutivlrarulhbrzsil.supabase.co",
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImthY3V0aXZscmFydWxoYnJ6c2lsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA1MDYyNTQsImV4cCI6MjA5NjA4MjI1NH0.U39OH4ysCEpQGGkJabKRw_u22SVLv8J7elUzESdxjTY"
+);
+ 
+// ── إذا كان المستخدم مسجل دخل أصلاً ── redirect
+(async () => {
+  const { data: { session } } = await _sb.auth.getSession();
+  if (session) window.location.href = 'index.html';
+})();
+ 
+// ── TABS ─────────────────────────────────────────────────────────────
+function switchTab(tab) {
+  const isLogin = tab === 'login';
+  document.getElementById('loginForm').style.display    = isLogin ? 'block' : 'none';
+  document.getElementById('registerForm').style.display = isLogin ? 'none'  : 'block';
+  document.querySelectorAll('.tab-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', isLogin ? i === 0 : i === 1);
+  });
+  hideAlert();
+}
+ 
+// ── ROLE ──────────────────────────────────────────────────────────────
+let selectedRole = 'client';
+function selectRole(role, el) {
+  selectedRole = role;
+  document.querySelectorAll('.role-card').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+ 
+// ── ALERT ─────────────────────────────────────────────────────────────
+function showAlert(msg, type = 'error') {
+  const box = document.getElementById('alertBox');
+  box.textContent = (type === 'error' ? '⚠️ ' : '✅ ') + msg;
+  box.className = 'alert show ' + type;
+}
+function hideAlert() {
+  document.getElementById('alertBox').className = 'alert';
+}
+ 
+// ── TOGGLE PASSWORD ───────────────────────────────────────────────────
+function togglePassword(inputId, btn) {
+  const input = document.getElementById(inputId);
+  const show = input.type === 'password';
+  input.type = show ? 'text' : 'password';
+  btn.innerHTML = show
+    ? `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94"/><path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19"/><line x1="1" y1="1" x2="23" y2="23"/></svg>`
+    : `<svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>`;
+}
+ 
+// ── PASSWORD STRENGTH ─────────────────────────────────────────────────
+function checkPassStrength(val) {
+  const bars = [1,2,3,4].map(i => document.getElementById('bar'+i));
+  let score = 0;
+  if (val.length >= 8) score++;
+  if (/[A-Z]/.test(val)) score++;
+  if (/[0-9]/.test(val)) score++;
+  if (/[^A-Za-z0-9]/.test(val)) score++;
+ 
+  const colors = ['#EF4444','#F59E0B','#3B82F6','#00B87A'];
+  const labels = ['ضعيفة','متوسطة','جيدة','قوية جداً'];
+  bars.forEach((b, i) => {
+    b.style.background = i < score ? colors[score-1] : '#E5E9F0';
+  });
+  document.getElementById('strengthLabel').textContent =
+    val.length ? labels[score - 1] || '' : '';
+}
+ 
+// ── LOADING STATE ─────────────────────────────────────────────────────
+function setLoading(btnId, spinnerId, textId, loading, text) {
+  document.getElementById(btnId).disabled = loading;
+  document.getElementById(spinnerId).style.display = loading ? 'block' : 'none';
+  document.getElementById(textId).style.display    = loading ? 'none' : 'block';
+  if (!loading && text) document.getElementById(textId).textContent = text;
+}
+ 
+// ── LOGIN ─────────────────────────────────────────────────────────────
+async function handleLogin(e) {
+  e.preventDefault();
+  hideAlert();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass  = document.getElementById('loginPass').value;
+ 
+  setLoading('loginBtn', 'loginSpinner', 'loginBtnText', true);
+ 
+  const { data, error } = await _sb.auth.signInWithPassword({ email, password: pass });
+ 
+  setLoading('loginBtn', 'loginSpinner', 'loginBtnText', false, 'دخول ←');
+ 
+  if (error) {
+    const msgs = {
+      'Invalid login credentials': 'البريد أو كلمة السر غلط',
+      'Email not confirmed': 'خاصك تأكد البريد الإلكتروني أولاً',
+    };
+    showAlert(msgs[error.message] || error.message);
+    document.getElementById('loginEmail').classList.add('error');
+    document.getElementById('loginPass').classList.add('error');
+    return;
+  }
+ 
+  showAlert('تم الدخول بنجاح! كنحول ليك...', 'success');
+  setTimeout(() => window.location.href = 'index.html', 1200);
+}
+ 
+// ── REGISTER ──────────────────────────────────────────────────────────
+async function handleRegister(e) {
+  e.preventDefault();
+  hideAlert();
+ 
+  const name  = document.getElementById('regName').value.trim();
+  const city  = document.getElementById('regCity').value;
+  const email = document.getElementById('regEmail').value.trim();
+  const pass  = document.getElementById('regPass').value;
+ 
+  if (pass.length < 8) {
+    showAlert('كلمة السر خاصها تكون 8 أحرف على الأقل');
+    return;
+  }
+ 
+  setLoading('regBtn', 'regSpinner', 'regBtnText', true);
+ 
+  const { data, error } = await _sb.auth.signUp({
+    email,
+    password: pass,
+    options: {
+      data: { full_name: name, city, role: selectedRole }
+    }
+  });
+ 
+  setLoading('regBtn', 'regSpinner', 'regBtnText', false, 'إنشاء الحساب ←');
+ 
+  if (error) {
+    const msgs = {
+      'User already registered': 'هاد البريد مسجل من قبل',
+      'Password should be at least 6 characters': 'كلمة السر قصيرة بزاف',
+    };
+    showAlert(msgs[error.message] || error.message);
+    return;
+  }
+ 
+
+showAlert('تم إنشاء الحساب بنجاح! سيتم تحويلك الآن...', 'success');
+
+setTimeout(() => {
+  window.location.href = 'index.html';
+}, 1200);
+
+}
+ 
+// ── FORGOT PASSWORD ───────────────────────────────────────────────────
+async function handleForgotPassword(e) {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  if (!email) {
+    showAlert('أدخل البريد الإلكتروني أولاً');
+    return;
+  }
+  const { error } = await _sb.auth.resetPasswordForEmail(email, {
+    redirectTo: window.location.origin + '/reset-password.html'
+  });
+  if (error) { showAlert(error.message); return; }
+  showAlert('تم الإرسال! راجع بريدك الإلكتروني 📧', 'success');
+}
+ 
+// ── GOOGLE / FACEBOOK ─────────────────────────────────────────────────
+async function handleGoogle() {
+  await _sb.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + '/index.html' }
+  });
+}
+async function handleFacebook() {
+  await _sb.auth.signInWithOAuth({
+    provider: 'facebook',
+    options: { redirectTo: window.location.origin + '/index.html' }
+  });
+}
+</script>
+</body>
+</html>
