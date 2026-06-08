@@ -222,26 +222,31 @@
  
 
 
-    .nav-auth {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-  }
+.nav-auth {
+  display: flex !important;
+  align-items: center;
+  gap: 12px;
+  position: fixed;
+  left: 16px;
+  top: 14px;
+  z-index: 1100;
+}
 
 
-    .btn-login {
-    background: transparent;
-    color: var(--blue);
-    border: 2px solid var(--blue);
-    padding: 8px 22px;
-    border-radius: 50px;
-    font-weight: 700;
-    font-size: 14px;
-    cursor: pointer;
-    transition: all 0.2s;
-    text-decoration: none;
-    display: inline-block;
-  }
+   .btn-login {
+  background: transparent;
+  color: var(--blue);
+  border: 2px solid var(--blue);
+  padding: 7px 16px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 13px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  white-space: nowrap;
+}
 
   .btn-login:hover {
     background: var(--blue-light);
@@ -1190,8 +1195,7 @@ nav {
 
 
   @media (max-width: 768px) {
-    .nav-links,
-    .nav-auth {
+    .nav-links {
       display: none !important;
     }
 
@@ -1215,6 +1219,22 @@ nav {
 
 
 
+
+
+  @media (max-width: 480px) {
+  .user-profile {
+    padding: 5px 10px 5px 8px;
+    gap: 8px;
+  }
+  .user-name {
+    font-size: 12px;
+  }
+  .user-avatar {
+    width: 30px;
+    height: 30px;
+    font-size: 13px;
+  }
+}
 
 /* Modal overlay */
 .modal-overlay-kh {
@@ -1263,9 +1283,8 @@ nav {
 
 
 <div class="nav-auth" id="navAuth">
-  <a href="login.html" class="btn-login">تسجيل الدخول</a>
-
-</div>  
+  <!-- سيتم ملؤه تلقائياً بالـ JS -->
+</div>
 
     <!-- Auth Buttons (Desktop) -->
 <!-- Auth Buttons (Desktop) -->
@@ -2030,12 +2049,13 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeService
 
 
   // تسجيل الخروج
-  function logout(event) {
-    event.stopPropagation();
-    localStorage.removeItem('loggedInUser');
-    updateAuthUI();
-    window.location.href = window.location.pathname; // تحديث الصفحة
-  }
+async function logout(event) {
+  event.stopPropagation();
+
+  await _sb.auth.signOut();
+
+  updateAuthUI();
+}
 
   // قائمة اختيارية لتسجيل الخروج (اختياري)
   function toggleLogoutMenu(event) {
@@ -2045,7 +2065,6 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') closeService
 
   // عند تحميل الصفحة
   document.addEventListener('DOMContentLoaded', () => {
-    updateAuthUI();
 
     // مثال: لو بدك تحاكي تسجيل دخول تجريبي (للتجربة فقط)
     // localStorage.setItem('loggedInUser', JSON.stringify({ name: 'أحمد العمراني', email: 'ahmed@example.com' }));
@@ -2337,6 +2356,72 @@ loadFeatured();
 
 
 
+
+
+// ── AUTH UI ──────────────────────────────────────────────
+async function updateAuthUI() {
+  const { data: { session } } = await _sb.auth.getSession();
+  const navAuth = document.getElementById('navAuth');
+  const mobileAuth = document.getElementById('mobileAuthLinks');
+
+  if (session) {
+
+    const { data: profile } = await _sb
+      .from('profiles')
+      .select('full_name')
+      .eq('id', session.user.id)
+      .single();
+
+    const name = profile?.full_name || session.user.email.split('@')[0];
+    const initial = name[0].toUpperCase();
+
+    // Desktop
+    navAuth.innerHTML = `
+      <div class="user-profile" onclick="toggleLogoutMenu(event)">
+        <div class="user-avatar">${initial}</div>
+        <div class="user-info">
+          <div class="user-name">${name}</div>
+          <div class="logout-btn" onclick="logout(event)">تسجيل الخروج</div>
+        </div>
+      </div>`;
+
+    // Mobile
+    if (mobileAuth) {
+      mobileAuth.innerHTML = `
+        <div class="mobile-user-info">
+          <div class="user-avatar" style="width:36px;height:36px;font-size:14px">${initial}</div>
+          <div>
+            <div style="font-weight:800;font-size:14px">${name}</div>
+            <div class="logout-btn" onclick="logout(event)" style="font-size:12px">تسجيل الخروج</div>
+          </div>
+        </div>`;
+    }
+
+  } else {
+
+    // Desktop
+    navAuth.innerHTML = `
+      <a href="login.html" class="btn-login">تسجيل الدخول</a>`;
+
+    // Mobile
+    if (mobileAuth) {
+      mobileAuth.innerHTML = `
+        <a href="login.html"
+           class="mobile-login"
+           style="text-decoration:none;display:block;text-align:center;padding:10px;border:2px solid var(--blue);color:var(--blue);border-radius:50px;font-weight:700">
+          تسجيل الدخول
+        </a>`;
+    }
+  }
+}
+
+// تشغيل أول مرة
+updateAuthUI();
+
+// مراقبة login/logout
+_sb.auth.onAuthStateChange(() => {
+  updateAuthUI();
+});
 
 
 
