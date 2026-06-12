@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="UTF-8">
@@ -146,10 +146,6 @@
   .nav-hamburger { display: flex !important; }
   nav { padding: 0 2%; }
 }
-
-
-
-
 
 
 
@@ -1148,13 +1144,19 @@ nav {
 @media (max-width: 900px) {
   .hero {
     grid-template-columns: 1fr;
-    padding: 75px 5% 40px !important; /* بدل 120px */
+    padding-top: 68px !important;  /* = nav height بالضبط */
+    padding-bottom: 40px;
+    padding-left: 5%;
+    padding-right: 5%;
   }
   .hero-visual { display: none; }
 }
 @media (max-width: 600px) {
   .hero {
-    padding: 70px 4% 30px !important;
+    padding-top: 65px !important;
+    padding-bottom: 30px;
+    padding-left: 4%;
+    padding-right: 4%;
   }
 }
 
@@ -1989,6 +1991,19 @@ function renderPanelList() {
 }
 
 
+
+
+
+function fixHeroPadding() {
+  const nav = document.getElementById('navbar');
+  const hero = document.querySelector('.hero');
+  if (nav && hero) {
+    hero.style.paddingTop = nav.offsetHeight + 'px';
+  }
+}
+
+window.addEventListener('load', fixHeroPadding);
+window.addEventListener('resize', fixHeroPadding);
 
 
 function toggleMenu() {
